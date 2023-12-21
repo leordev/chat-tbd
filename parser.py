@@ -9,6 +9,13 @@ def langchain_docs_extractor(soup: BeautifulSoup) -> str:
     SCAPE_TAGS = ["nav", "footer", "aside", "script", "style"]
     [tag.decompose() for tag in soup.find_all(SCAPE_TAGS)]
 
+    # TODO: propose removing the feedback widget from within the <article> tag
+    # Filter out tbd feedback widget
+    feedback_divs = soup.find_all(lambda tag: tag.name == "div" and 
+                                  tag.find("h3", class_="feedback-header"))
+    for div in feedback_divs:
+        div.decompose()
+
     def get_text(tag: Tag) -> Generator[str, None, None]:
         for child in tag.children:
             if isinstance(child, Doctype):
