@@ -1,4 +1,4 @@
-Forked from
+Forked from: https://github.com/langchain-ai/chat-langchain
 
 Leo Raw Instructions to run, the official instructions can be found in the next section!
 
@@ -9,7 +9,7 @@ export WEAVIATE_API_KEY=""
 # yes the api key is empty, we need it this way with the local docker weaviate instance
 export OPENAI_API_KEY="<your-openai-api-key-here>"
 
-poetry install # good luck with this, it took me a while to figure it out how to install everything correctly because I had squareup environment before, hopefully you dont
+poetry install # good luck with this, it took me a while to figure it out how to install everything correctly because I had a messy environment before, hopefully you dont
 
 # only once, this will load your vector database
 python ingest.py
