@@ -153,24 +153,26 @@ def ingest_docs():
     docs_from_documentation = load_tbd_docs()
     logger.info(
         f"Loaded {len(docs_from_documentation)} docs from TBD documentation at developer.tbd.website")
-    docs_from_code = load_web5_code()
-    logger.info(
-        f"Loaded {len(docs_from_code)} docs from the sourcecode at web5-js repo")
+    # docs_from_code = load_web5_code()
+    # logger.info(
+    #     f"Loaded {len(docs_from_code)} docs from the sourcecode at web5-js repo")
     # docs_from_api = load_tbdex_api_docs()
     # logger.info(f"Loaded {len(docs_from_api)} docs from tbDEX-js API docs at https://tbd54566975.github.io/tbdex-js")
 
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=4000, chunk_overlap=200)
 
-    for doc in docs_from_code:
-        doc.metadata["title"] = doc.metadata["source"]
+    # for doc in docs_from_code:
+    #     doc.metadata["title"] = doc.metadata["source"]
+    #     # todo: add github raw file path prefix
+    #     # todo: change from main to a specific released tagged branch
 
     docs_transformed = text_splitter.split_documents(
         docs_from_documentation
         # docs_from_documentation + docs_from_api + docs_from_code
         # docs_from_documentation_langchain
         # docs_from_langchain_api
-    ) + docs_from_code
+    )  # + docs_from_code
 
     # We try to return 'source' and 'title' metadata when querying vector store and
     # Weaviate will error at query time if one of the attributes is missing from a
