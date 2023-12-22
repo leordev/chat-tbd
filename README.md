@@ -1,3 +1,34 @@
+Forked from
+
+Leo Raw Instructions to run, the official instructions can be found in the next section!
+
+```sh
+docker compose up -d
+export WEAVIATE_URL="http://localhost:50080"
+export WEAVIATE_API_KEY=""
+# yes the api key is empty, we need it this way with the local docker weaviate instance
+export OPENAI_API_KEY="<your-openai-api-key-here>"
+
+poetry install # good luck with this, it took me a while to figure it out how to install everything correctly because I had squareup environment before, hopefully you dont
+
+# only once, this will load your vector database
+python ingest.py
+# feel free to tweak the loaders here: https://github.com/leordev/chat-tbd/blob/leordev/tbd/ingest.py#L153-L158
+# for example you could add the pfi-exemplar as a new git to load
+
+# terminal 1: run the backend python chat that will interface with the vector store, openai etc.
+poetry run make start
+
+# terminal 2: run the nextjs frontend chat app
+cd chat-langchain
+yarn
+yarn dev
+
+# open localhost:3000
+```
+
+PS: the feedback and trace functionalities are not working
+
 # 🦜️🔗 Chat LangChain
 
 This repo is an implementation of a locally hosted chatbot specifically focused on question answering over the [LangChain documentation](https://langchain.readthedocs.io/en/latest/).
@@ -8,8 +39,10 @@ Deployed version: [chat.langchain.com](https://chat.langchain.com)
 The app leverages LangChain's streaming support and async API to update the page in real time for multiple users.
 
 ## ✅ Running locally
+
 1. Install backend dependencies: `poetry install`.
 1. Make sure to enter your environment variables to configure the application:
+
 ```
 export OPENAI_API_KEY=
 export WEAVIATE_URL=
@@ -22,6 +55,7 @@ export LANGCHAIN_ENDPOINT="https://api.smith.langchain.com"
 export LANGCHAIN_API_KEY=
 export LANGCHAIN_PROJECT=
 ```
+
 1. Run `python ingest.py` to ingest LangChain docs data into the Weaviate vectorstore (only needs to be done once).
    1. You can use other [Document Loaders](https://langchain.readthedocs.io/en/latest/modules/document_loaders.html) to load your own data into the vectorstore.
 1. Start the Python backend with `poetry run make start`.
@@ -30,6 +64,7 @@ export LANGCHAIN_PROJECT=
 1. Open [localhost:3000](http://localhost:3000) in your browser.
 
 ## ☕ Running locally (JS backend)
+
 1. Follow the first three steps above to ingest LangChain docs data into the vectorstore.
 1. Install frontend dependencies by running `cd chat-langchain`, then `yarn`.
 1. Populate a `chat-langchain/.env.local` file with your own versions of keys from the `chat-langchain/.env.example` file, and set `NEXT_PUBLIC_API_BASE_URL` to `"http://localhost:3000/api"`.
