@@ -26,7 +26,7 @@ from constants import WEAVIATE_DOCS_INDEX_NAME
 
 RESPONSE_TEMPLATE = """\
 You are an expert programmer and problem-solver, tasked with answering any question \
-about Langchain.
+about TBD related technologies.
 
 Generate a comprehensive and informative answer of 80 words or less for the \
 given question based solely on the provided search results (URL and content). You must \

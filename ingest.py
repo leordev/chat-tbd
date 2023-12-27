@@ -221,7 +221,7 @@ def ingest_docs():
     num_vecs = client.query.aggregate(
         WEAVIATE_DOCS_INDEX_NAME).with_meta_count().do()
     logger.info(
-        f"LangChain now has this many vectors: {num_vecs}",
+        f"Weaviate now has this many vectors: {num_vecs}",
     )
 
 
