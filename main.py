@@ -1,5 +1,6 @@
 """Main entrypoint for the app."""
 import asyncio
+import subprocess
 from typing import Optional, Union
 from uuid import UUID
 
@@ -93,6 +94,15 @@ async def aget_trace_url(run_id: str) -> str:
 
 class GetTraceBody(BaseModel):
     run_id: UUID
+
+
+# TODO: protect endpoint
+@app.get("/ingest")
+async def get_ingest():
+    print(">>> running ingest script...")
+    result = subprocess.run("python ingest.py", shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    return {"stdout": result.stdout, "stderr": result.stderr}
+
 
 
 @app.post("/get_trace")
